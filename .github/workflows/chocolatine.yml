@@ -10,7 +10,7 @@ env:
 
 jobs:
   check_compilation_and_coding_style:
-    runs-on: epitechcontent/epitest-docker
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
