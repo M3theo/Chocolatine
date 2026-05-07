@@ -1,0 +1,30 @@
+name: la-vision
+run-name: ${{ github.actor }} is using La Vision
+on: 
+  push:
+    branches-ignore:
+      - 'no-ga/'
+env:
+  # MIRROR_SSH_URL: ${{ secrets.MIRROR_SSH_URL }}
+  EXECUTABLES: ${{ vars.EXECUTABLES }}
+
+jobs:
+  check_compilation_and_coding_style:
+    runs-on: epitechcontent/epitest-docker
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Check compilation
+        timeout-minutes: 2
+        run: |
+          make -j$(nproc) all
+      - name: Cleaning
+        run: |
+          make clean
+      - name: Check the executable files
+        run: |
+          test -f ${EXECUTABLES} || exit 1
+      - name: Clean All
+        run: |
+          make fclean
+
